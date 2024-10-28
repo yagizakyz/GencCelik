@@ -1,0 +1,85 @@
+﻿@model GencCelik.Models.PersonClass
+@{
+    ViewData["Title"] = "DetailVehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.ve Plakalı Araç</h1>
+
+<h3>Aracın Mazot Gideri</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Litre</th>
+        <th>Harcanan Yakıt</th>
+        <th>Tutar</th>
+        <th>Tarih</th>
+    </tr>
+
+    @foreach (var item in Model.DieselC)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Liter</td>
+            <td>@item.Km</td>
+            <td>@item.Expense</td>
+            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+        </tr>
+    }
+</table>
+<br />
+<h3>Aracın Sanayi Gideri</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Tutar</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+    </tr>
+
+    @foreach (var item in Model.IndustryC)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Expense</td>
+            <td>@item.Description</td>
+            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+        </tr>
+    }
+</table>
+<br />
+<h3>Aracın Nakliye İşleri</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Şöför</th>
+        <th>Firma</th>
+        <th>Yükleme Yeri</th>
+        <th>Gideceği Yer</th>
+        <th>Navlun</th>
+        <th>Türü</th>
+        <th>Fatura</th>
+        <th>Booking NO</th>
+        <th>Konteyner</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+    </tr>
+
+    @foreach (var item in Model.ShippingC)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Person.PName @item.Person.PSurname</td>
+            <td>@item.Company</td>
+            <td>@item.Location</td>
+            <td>@item.Destination</td>
+            <td>@item.Navlun</td>
+            <td>@item.Kind</td>
+            <td>@item.Invoice</td>
+            <td>@item.BookingNo</td>
+            <td>@item.Container</td>
+            <td>@item.Description</td>
+            <td>@item.Date</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,86 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IEnumerable<GencCelik.Models.ShippingClass>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Sevkiyat Listesi</h1>
+<a href="/Shipping/ExportToExcel" class="btn btn-success">Excel Olarak İndir</a>
+<br />
+<br />
+@using (Html.BeginForm("Index", "Shipping", FormMethod.Get))
+{
+<p>
+    Aracın Plakası: @Html.TextBox("p")  Firma Adı: @Html.TextBox("co")  Fatura: @Html.TextBox("i")  Tarih: @Html.TextBox("dt")
+    <input class="form-check" type="submit" value="Ara" />
+</p>
+}
+<a href="/Shipping/NewShip/" class="btn btn-primary" style="background-color:darkblue">Yeni Sevkiyat Ekle</a>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Şöför</th>
+        <th>Araç Plakası</th>
+        <th>Firma</th>
+        <th>Yükleme Yeri</th>
+        <th>Gideceği Yer</th>
+        <th>Navlun</th>
+        <th>Türü</th>
+        <th>Fatura</th>
+        <th>Booking NO</th>
+        <th>Konteyner</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+        <th>Güncelle</th>
+        <th>Sil</th>
+        <th>Ekleyen Kullanıcı</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (@item.Invoice == "Fatura Kesildi")
+        {
+            <tr style="color:black">
+                <td>@item.Id</td>
+                <td>@item.Person.PName @item.Person.PSurname</td>
+                <td>@item.Vehicle.Plate</td>
+                <td>@item.Company</td>
+                <td>@item.Location</td>
+                <td>@item.Destination</td>
+                <td>@item.Navlun</td>
+                <td>@item.Kind</td>
+                <td>@item.Invoice</td>
+                <td>@item.BookingNo</td>
+                <td>@item.Container</td>
+                <td>@item.Description</td>
+                <td>@item.Date</td>
+                <td><a href="/Shipping/GetShipping/@item.Id" class="btn btn-success">Güncelle</a></td>
+                <td><a href="/Shipping/DeleteShipping/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+                <td>@item.LogUser</td>
+            </tr>
+        }
+        else if (@item.Invoice == "Fatura Kesilmedi")
+        {
+            <tr style="color:red">
+                <td>@item.Id</td>
+                <td>@item.Person.PName @item.Person.PSurname</td>
+                <td>@item.Vehicle.Plate</td>
+                <td>@item.Company</td>
+                <td>@item.Location</td>
+                <td>@item.Destination</td>
+                <td>@item.Navlun</td>
+                <td>@item.Kind</td>
+                <td>@item.Invoice</td>
+                <td>@item.BookingNo</td>
+                <td>@item.Container</td>
+                <td>@item.Description</td>
+                <td>@item.Date</td>
+                <td><a href="/Shipping/GetShipping/@item.Id" class="btn btn-success">Güncelle</a></td>
+                <td><a href="/Shipping/DeleteShipping/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+                <td>@item.LogUser</td>
+            </tr>
+        }
+    }
+</table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

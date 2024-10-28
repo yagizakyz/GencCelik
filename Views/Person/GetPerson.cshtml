@@ -1,0 +1,53 @@
+﻿@model GencCelik.Models.PersonClass
+@{
+    ViewData["Title"] = "GetPerson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Personel Bilgieri Güncelleme Sayfası</h2>
+<h4>@Html.ValidationSummary(false, "Her alan doldurulmak zorunda", new { @style = "color:red" })</h4>
+@using (Html.BeginForm("UpdatePerson", "Person", FormMethod.Post))
+{
+    @Html.Label("ID")
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control" })
+    <br />
+    @Html.Label("Ad")
+    @Html.TextBoxFor(x => x.PName, new { @class = "form-control" })
+    <br />
+    @Html.Label("Soyad")
+    @Html.TextBoxFor(x => x.PSurname, new { @class = "form-control" })
+    <br />
+    @Html.Label("Kullanıcı Adı")
+    @Html.TextBoxFor(x => x.Nickname, new { @class = "form-control" })
+    <br />
+    @Html.Label("Şifre")
+    @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+    <br />
+    @Html.Label("İşi")
+    <br />
+    @Html.DropDownListFor(x => x.JobID, (List<SelectListItem>)ViewBag.per, new { @class = "form-control" })
+    <br />
+    @Html.Label("İşe Giriş Tarihi")
+    @Html.TextBoxFor(x => x.StartDateOfWork, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    <br />
+    @Html.Label("İşten Çıkış Tarihi")
+    @Html.TextBoxFor(x => x.DismissalDate, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    <br />
+    @Html.Label("İş Günevlik Belgesi")
+    <br />
+    @Html.DropDownListFor(x => x.Safety, (List<SelectListItem>)ViewBag.p1, new { @class = "form-control" })
+    <br />
+    @Html.Label("Özlük Belgesi")
+    <br />
+    @Html.DropDownListFor(x => x.Ozlük, (List<SelectListItem>)ViewBag.p1, new { @class = "form-control" })
+    <br />
+    @Html.Label("Yıllık İzin")
+    <br />
+    @Html.DropDownListFor(x => x.AnnualPermit, (List<SelectListItem>)ViewBag.p2, new { @class = "form-control" })
+    <br />
+    @Html.Label("Kullanıcı")
+    <br />
+    @Html.DropDownListFor(x => x.LogUser, (List<SelectListItem>)ViewBag.lu, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" style="background-color:darkblue">Personel Bilgilerini Güncelle</button>
+}

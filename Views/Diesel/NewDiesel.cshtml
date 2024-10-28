@@ -1,0 +1,36 @@
+﻿@model GencCelik.Models.DieselClass
+@{
+    ViewData["Title"] = "NewDiesel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Yeni Mazot Kullanımı Ekle Sayfası</h2>
+<h4>@Html.ValidationSummary(false, "Her alan doldurulmak zorunda", new { @style = "color:red" })</h4>
+@using (Html.BeginForm("NewDiesel", "Diesel", FormMethod.Post))
+{
+    @Html.Label("Araç")
+    <br />
+    @Html.DropDownListFor(x => x.VehicleID, (List<SelectListItem>)ViewBag.vec, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.VehicleID, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Alınan Yakıt")
+    @Html.TextBoxFor(x => x.Liter, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Liter, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Kilometre")
+    @Html.TextBoxFor(x => x.Km, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Km, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Tutar")
+    @Html.TextBoxFor(x => x.Expense, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Expense, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Tarih")
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    <br />
+    @Html.Label("Kullanıcı")
+    <br />
+    @Html.DropDownListFor(x => x.LogUser, (List<SelectListItem>)ViewBag.lu, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" style="background-color:darkblue">Ekle</button>
+}

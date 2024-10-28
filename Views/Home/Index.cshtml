@@ -1,0 +1,106 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IEnumerable<GencCelik.Models.VehicleClass>
+@{
+    ViewData["Title"] = "Genç Çelik Nakliyat - Araç Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Araç Listesi</h1>
+<a href="/Home/ExportToExcel" class="btn btn-success">Excel Olarak İndir</a>
+<br />
+<br />
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <p>
+        Araç Plakası: @Html.TextBox("p")
+        <input class="form-check" type="submit" value="Ara" style="text-transform: uppercase" />
+    </p>
+}
+@if (User.IsInRole("ASG") || User.IsInRole("A") || User.IsInRole("Full") || User.IsInRole("AG"))
+{
+    <a href="/Home/NewVehicle/" class="btn btn-primary" style="background-color:darkblue">Yeni Araç Ekle</a>
+}
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Plaka</th>
+        <th>Aracın Markası</th>
+        <th>Aracın Modeli</th>
+        <th>Vize Tarihi</th>
+        <th>Kiralık</th>
+        <th>Kira Faturası</th>
+        @if (User.IsInRole("ASG") || User.IsInRole("A") || User.IsInRole("Full") || User.IsInRole("AG"))
+        {
+            <th>Güncelle</th>
+            <th>Sil</th>
+        }
+        <th>Gider</th>
+        <th>Ekleyen Kullanıcı</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (item.Deletes == false)
+        {
+            if (item.RentInvoice == "Kiralık Değil")
+            {
+                <tr style="color:black">
+                    <td>@item.Id</td>
+                    <td>@item.Plate</td>
+                    <td>@item.VehicleBrand</td>
+                    <td>@item.VehicleModel</td>
+                    <td>@item.VizeDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Rent</td>
+                    <td>@item.RentInvoice</td>
+                    @if (User.IsInRole("ASG") || User.IsInRole("A") || User.IsInRole("Full") || User.IsInRole("AG"))
+                    {
+                        <td><a href="/Home/GetVehicle/@item.Id" class="btn btn-success">Güncelle</a></td>
+                        <td><a href="/Home/DeleteVehicle/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+                    }
+                    <td><a href="/Home/DetailVehicle/@item.Id" class="btn btn-info">İş/Gider</a></td>
+                    <td>@item.LogUser</td>
+                </tr>
+            }
+            else if (item.RentInvoice == "Fatura Gönderildi")
+            {
+                <tr style="color:#04f000">
+                    <td>@item.Id</td>
+                    <td>@item.Plate</td>
+                    <td>@item.VehicleBrand</td>
+                    <td>@item.VehicleModel</td>
+                    <td>@item.VizeDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Rent</td>
+                    <td>@item.RentInvoice</td>
+                    @if (User.IsInRole("ASG") || User.IsInRole("A") || User.IsInRole("Full") || User.IsInRole("AG"))
+                    {
+                        <td><a href="/Home/GetVehicle/@item.Id" class="btn btn-success">Güncelle</a></td>
+                        <td><a href="/Home/DeleteVehicle/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+                    }
+                    <td><a href="/Home/DetailVehicle/@item.Id" class="btn btn-info">İş/Gider</a></td>
+                    <td>@item.LogUser</td>
+                </tr>
+            }
+            else if (item.RentInvoice == "Fatura Gönderilmedi")
+            {
+                <tr style="color:red">
+                    <td>@item.Id</td>
+                    <td>@item.Plate</td>
+                    <td>@item.VehicleBrand</td>
+                    <td>@item.VehicleModel</td>
+                    <td>@item.VizeDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Rent</td>
+                    <td>@item.RentInvoice</td>
+                    @if (User.IsInRole("ASG") || User.IsInRole("A") || User.IsInRole("Full") || User.IsInRole("AG"))
+                    {
+                        <td><a href="/Home/GetVehicle/@item.Id" class="btn btn-success">Güncelle</a></td>
+                        <td><a href="/Home/DeleteVehicle/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+                    }
+                    <td><a href="/Home/DetailVehicle/@item.Id" class="btn btn-info">İş/Gider</a></td>
+                    <td>@item.LogUser</td>
+                </tr>
+            }
+        }
+    }
+</table>
+<br />
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

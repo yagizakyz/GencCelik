@@ -1,0 +1,40 @@
+﻿@model GencCelik.Models.VehicleClass
+@{
+    ViewData["Title"] = "NewVehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Yeni Araç Ekleme Sayfası</h2>
+<h4>@Html.ValidationSummary(false, "Her alan doldurulmak zorunda", new { @style = "color:red" })</h4>
+@using (Html.BeginForm("NewVehicle", "Home", FormMethod.Post))
+{
+    @Html.Label("Plaka")
+    @Html.TextBoxFor(x => x.Plate, new { @class = "form-control", @style = "text-transform: uppercase" })
+    @Html.ValidationMessageFor(x => x.Plate, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Aracın Markası")
+    @Html.TextBoxFor(x => x.VehicleBrand, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.VehicleBrand, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Aracın Modeli")
+    @Html.TextBoxFor(x => x.VehicleModel, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.VehicleModel, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Vize Tarihi")
+    @Html.TextBoxFor(x => x.VizeDate, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    @Html.ValidationMessageFor(x => x.VizeDate, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Kiralık")
+    <br />
+    @Html.DropDownListFor(x => x.Rent, (List<SelectListItem>)ViewBag.r1, new { @class = "form-control" })
+    <br />
+    @Html.Label("Kira Faturası")
+    <br />
+    @Html.DropDownListFor(x => x.RentInvoice, (List<SelectListItem>)ViewBag.r2, new { @class = "form-control" })
+    <br />
+    @Html.Label("Kullanıcı")
+    <br />
+    @Html.DropDownListFor(x => x.LogUser, (List<SelectListItem>)ViewBag.lu, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" style="background-color:darkblue">Aracı Ekle</button>
+}

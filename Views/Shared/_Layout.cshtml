@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Genç Çelik Nakliye Paneli</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:white">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid" style="background-color:darkblue">
+            <div class="navbar-header">
+                <a class="navbar-brand">Genç Çelik</a>
+            </div>
+            <ul class="nav navbar-nav">
+                @if (User.IsInRole("ASG") || User.IsInRole("S") || User.IsInRole("SG") || User.IsInRole("Full"))
+                {
+                    <li><a href="/Shipping/Index" style="color:white">Sevkiyat</a></li>
+                    <li><a href="/Shipping/NewShip" style="color:white">Sevkiyat Ekle</a></li>
+                }
+                <li><a href="/Home/Index" style="color:white">Araçlar</a></li>
+                <li><a href="/Diesel/Index" style="color:white">Mazot Gideri</a></li>
+                <li><a href="/Industry/Index" style="color:white">Sanayi Gideri</a></li>
+                <li><a href="/Person/Index" style="color:white">Personel</a></li>
+                <li><a href="/Login/LogOut/" style="color:white">Çıkış Yap</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>

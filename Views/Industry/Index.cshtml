@@ -1,0 +1,55 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IEnumerable<GencCelik.Models.IndustryClass>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sanayi Gider Listesi</h2>
+<a href="/Industry/ExportToExcel" class="btn btn-success">Excel Olarak İndir</a>
+<br />
+<br />
+@using (Html.BeginForm("Index", "Industry", FormMethod.Get))
+{
+    <p>
+        Araç Plakası: @Html.TextBox("p")
+        <input class="form-check" type="submit" value="Ara" />
+    </p>
+}
+@if (User.IsInRole("ASG") || User.IsInRole("SG") || User.IsInRole("G") || User.IsInRole("Full") || User.IsInRole("AG"))
+{
+    <a href="/Industry/NewIndustry/" class="btn btn-primary" style="background-color:darkblue">Yeni Sanayi Gideri Ekle</a>
+}
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Araç Plakası</th>
+        <th>Tutar</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+        @if (User.IsInRole("ASG") || User.IsInRole("SG") || User.IsInRole("G") || User.IsInRole("Full") || User.IsInRole("AG"))
+        {
+            <th>Güncelle</th>
+            <th>Sil</th>
+        }
+        <th>Ekleyen Kullanıcı</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Vehicle.Plate</td>
+            <td>@item.Expense</td>
+            <td>@item.Description</td>
+            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+            @if (User.IsInRole("ASG") || User.IsInRole("SG") || User.IsInRole("G") || User.IsInRole("Full") || User.IsInRole("AG"))
+            {
+                <td><a href="/Industry/GetIndustry/@item.Id" class="btn btn-success">Güncelle</a></td>
+                <td><a href="/Industry/DeleteIndustry/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Sil</a></td>
+            }
+            <td>@item.LogUser</td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

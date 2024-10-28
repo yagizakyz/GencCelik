@@ -1,0 +1,96 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IEnumerable<GencCelik.Models.PersonClass>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Personel Listesi</h1>
+<a href="/Person/ExportToExcel" class="btn btn-success">Excel Olarak İndir</a>
+<br />
+<br />
+@using (Html.BeginForm("Index", "Person", FormMethod.Get))
+{
+    <p style="text-transform: uppercase">
+        Personel Adı: @Html.TextBox("p")  Personel Soyadı: @Html.TextBox("surname")
+        <input class="form-check" style="text-transform: uppercase" type="submit" value="Ara" />
+    </p>
+}
+@if (User.IsInRole("Full"))
+{
+    <a href="/Person/NewPerson/" class="btn btn-primary" style="background-color:darkblue">Yeni Personel Ekle</a>
+}
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>İşi</th>
+        <th>İşe Giriş Tarihi</th>
+        <th>İşten Çıkış Tarihi</th>
+        <th>İş Güvenliği Belgesi</th>
+        <th>Özlük Dosyası</th>
+        <th>Yıllık İzin</th>
+        @if (User.IsInRole("Full"))
+        {
+            <th>Pasif</th>
+            <th>Güncelle</th>
+            <th>İşleri</th>
+        }
+        <th>Yetki</th>
+        <th>Ekleyen Kullanıcı</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.PName</td>
+            <td>@item.PSurname</td>
+            <td>@item.Job.JName</td>
+            <td>@item.StartDateOfWork.ToShortDateString()</td>
+            <td>@item.DismissalDate.ToShortDateString()</td>
+            @if (item.Safety == false)
+            {
+                <td>Hazırlanmadı</td>
+            }
+            @if (item.Safety == true)
+            {
+                <td>Hazırlandı</td>
+            }
+            @if (item.Ozlük == false)
+            {
+                <td>Hazırlanmadı</td>
+            }
+            @if (item.Ozlük == true)
+            {
+                <td>Hazırlandı</td>
+            }
+            @if (item.AnnualPermit == false)
+            {
+                <td>Kullanmadı</td>
+            }
+            @if (item.AnnualPermit == true)
+            {
+                <td>Kullandı</td>
+            }
+            @if (User.IsInRole("Full"))
+            {
+                @if (item.Deletes == false)
+                {
+                    <td><a href="/Person/DeletePerson/@item.Id" onclick="return confirm('Silmek istediğine emin misin?')" class="btn btn-danger">Pasif</a></td>
+                    <td><a href="/Person/GetPerson/@item.Id" class="btn btn-success">Güncelle</a></td>
+                }
+                @if (item.Deletes == true)
+                {
+                    <td style="color:#ff000d">Pasif</td>
+                    <td><a href="#pasif" class="btn btn-success">Pasif</a></td>
+                }
+                <td><a href="/Person/DetailPerson/@item.Id" class="btn btn-info">İşleri</a></td>
+            }
+            <td>@item.Roles</td>
+            <td>@item.LogUser</td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

@@ -1,0 +1,42 @@
+﻿@model GencCelik.Models.PersonClass
+@{
+    ViewData["Title"] = "DetailPerson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.nm</h1>
+<h3>Şöförün Nakliye İşleri</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Araç Plakası</th>
+        <th>Firma</th>
+        <th>Yükleme Yeri</th>
+        <th>Gideceği Yer</th>
+        <th>Navlun</th>
+        <th>Türü</th>
+        <th>Fatura</th>
+        <th>Booking NO</th>
+        <th>Konteyner</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+    </tr>
+
+    @foreach (var item in Model.ShippingC)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Vehicle.Plate</td>
+            <td>@item.Company</td>
+            <td>@item.Location</td>
+            <td>@item.Destination</td>
+            <td>@item.Navlun</td>
+            <td>@item.Kind</td>
+            <td>@item.Invoice</td>
+            <td>@item.BookingNo</td>
+            <td>@item.Container</td>
+            <td>@item.Description</td>
+            <td>@item.Date</td>
+        </tr>
+    }
+</table>

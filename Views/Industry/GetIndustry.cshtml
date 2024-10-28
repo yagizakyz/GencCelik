@@ -1,0 +1,34 @@
+﻿@model GencCelik.Models.IndustryClass
+@{
+    ViewData["Title"] = "GetIndustry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sanayi Gideri Bilgilerini Güncelleme Sayfası</h2>
+<h4>@Html.ValidationSummary(false, "Her alan doldurulmak zorunda", new { @style = "color:red" })</h4>
+@using (Html.BeginForm("UpdateIndustry", "Industry", FormMethod.Post))
+{
+    @Html.Label("Id")
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control" })
+    <br />
+    @Html.Label("Araç")
+    <br />
+    @Html.DropDownListFor(x => x.VehicleID, (List<SelectListItem>)ViewBag.vec, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.VehicleID, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Tutar")
+    @Html.TextBoxFor(x => x.Expense, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Expense, "", new { @style = "color:red" })
+    <br />
+    @Html.Label("Açıklama")
+    @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+    <br />
+    @Html.Label("Tarih")
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    <br />
+    @Html.Label("Kullanıcı")
+    <br />
+    @Html.DropDownListFor(x => x.LogUser, (List<SelectListItem>)ViewBag.lu, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" style="background-color:darkblue">Güncelle</button>
+}

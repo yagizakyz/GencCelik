@@ -1,0 +1,56 @@
+﻿@model GencCelik.Models.ShippingClass
+@{
+    ViewData["Title"] = "NewShip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sevkiyat Ekleme Sayfası</h1>
+<h4>@Html.ValidationSummary(false, "Her alan doldurulmak zorunda", new { @style = "color:red" })</h4>
+@using (Html.BeginForm("NewShip", "Shipping", FormMethod.Post))
+{
+    @Html.Label("Şöför")
+    <br />
+    @Html.DropDownListFor(x => x.PersonID, (List<SelectListItem>)ViewBag.per, new { @class = "form-control" })
+    <br />
+    @Html.Label("Araç")
+    <br />
+    @Html.DropDownListFor(x => x.VehicleID, (List<SelectListItem>)ViewBag.vec, new { @class = "form-control" })
+    <br />
+    @Html.Label("Firma")
+    @Html.TextBoxFor(x => x.Company, new { @class = "form-control", @style = "text-transform: uppercase" })
+    <br />
+    @Html.Label("Yükleme Yeri")
+    @Html.TextBoxFor(x => x.Location, new { @class = "form-control", @style = "text-transform: uppercase" })
+    <br />
+    @Html.Label("Gideceği Yer")
+    @Html.TextBoxFor(x => x.Destination, new { @class = "form-control", @style = "text - transform: uppercase" })
+    <br />
+    @Html.Label("Navlun")
+    @Html.TextBoxFor(x => x.Navlun, new { @class = "form-control" })
+    <br />
+    @Html.Label("Türü")
+    <br />
+    @Html.DropDownListFor(x => x.Kind, (List<SelectListItem>)ViewBag.p1, new { @class = "form-control" })
+    <br />
+    @Html.Label("Fatura")
+    <br />
+    @Html.DropDownListFor(x => x.Invoice, (List<SelectListItem>)ViewBag.r2, new { @class = "form-control" })
+    <br />
+    @Html.Label("Booking NO")
+    @Html.TextBoxFor(x => x.BookingNo, new { @class = "form-control", @style = "text-transform: uppercase" })
+    <br />
+    @Html.Label("Konteyner")
+    @Html.TextBoxFor(x => x.Container, new { @class = "form-control", @style = "text-transform: uppercase" })
+    <br />
+    @Html.Label("Açıklama")
+    @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+    <br />
+    @Html.Label("Tarih")
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", placeholder = "06.10.2021 (gün-ay-yıl) şeklinde giriş yapın." })
+    <br />
+    @Html.Label("Kullanıcı")
+    <br />
+    @Html.DropDownListFor(x => x.LogUser, (List<SelectListItem>)ViewBag.lu, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" style="background-color:darkblue">Ekle</button>
+}
